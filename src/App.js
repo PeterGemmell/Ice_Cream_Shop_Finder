@@ -2,15 +2,22 @@ import React, {Component} from 'react';
 import './App.css';
 import MapContainer from './containers/MapContainer.js'
 import GoogleMapReact from 'google-map-react';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import 'antd/dist/antd.css';
 
 class App extends Component {
 
   render(){
     return(
-      <div>
-      <MapContainer />
-      </div>
-    );
+      <div className="App">
+      <header className="App-header">
+    {/* <img src={logo} className="App-logo" alt="logo" /> */}
+    </header>
+    <div className="container h-100">
+    <MapContainer />
+    </div>
+    </div>
+  );
   }
 }
 
