@@ -197,7 +197,7 @@ render() {
        <section className="col-8 h-lg">
        <GoogleMapReact
        bootstrapURLKeys={{
-         key: 'AIzaSyDMg4VyNgcmOUUktDRoIogoqR56usITneU',
+         key: '',
          libraries: ['places', 'directions']
        }}
        defaultZoom={11}
@@ -206,7 +206,7 @@ render() {
        onGoogleApiLoaded={({map, maps}) => this.apiHasLoaded(map, maps)} // maps is refering to the maps api.
        >
        {/* Pin markers on the Map*/}
-       
+
 
 
 
