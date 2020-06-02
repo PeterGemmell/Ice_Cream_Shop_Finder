@@ -1,8 +1,10 @@
 import React from 'react';
-import { Icon, Slider } from 'antd';
+// import { Icon, Slider } from 'antd';
+import Icon from '@ant-design/icons';
+import Slider from "react-slick";
 
 
-const ConstraintSlider = (({iconType, value, onChange text}) => {
+const ConstraintSlider = (({ iconType, value, onChange, text}) => {
   return (
     <section className= "d-flex flex-column">
     <div className= "d-flex w-100 align-items-center">

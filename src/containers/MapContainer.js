@@ -4,10 +4,11 @@ import MapAutoComplete from '../components/MapAutoComplete';
 import MapMarker from '../components/MapMarker';
 import PlaceCard from '../components/PlaceCard';
 import ConstraintSlider from '../components/ConstraintSlider';
+import Icon from '@ant-design/icons';
 
 import { Button, Input, Divider, message } from 'antd';
 
-const GLA_COOR = { lat: 55.8642, lng: 4.2518 };
+const GLA_COOR = { lat: 55.8642, lng: -4.2518 };
 
 
 class MapContainer extends Component {
@@ -79,7 +80,7 @@ apiHasLoaded = ((map, mapsApi) => {
     map,
     mapsApi,
     glasgowLatLng: new mapsApi.LatLng(GLA_COOR.lat, GLA_COOR.lng),
-    autoCompleteService: new mapsApi.places.autoCompleteService(),
+    autoCompleteService: new mapsApi.places.AutocompleteService(),
     placesService: new mapsApi.places.PlacesService(map),
     geoCoderService: new mapsApi.Geocoder(),
     directionService: new mapsApi.DirectionsService(),
@@ -102,7 +103,7 @@ handleSearch = (() => {
     location: markerLatLng,
     type: ['restaurant', 'cafe'],
     query: 'ice cream',
-    rankBy: mapsApi.places.rankBy.DISTANCE,
+    rankBy: mapsApi.places.RankBy.DISTANCE,
   };
 
   // First, search for ice cream shops.
@@ -206,11 +207,41 @@ render() {
        onGoogleApiLoaded={({map, maps}) => this.apiHasLoaded(map, maps)} // maps is refering to the maps api.
        >
        {/* Pin markers on the Map*/}
+       {markers.map((marker, key) => {
+         const{ name, lat, lng } = marker;
+         return(
+           <MapMarker key={key} name={name} lat={lat} lng={lng} />
+         );
+       })}
+       </GoogleMapReact>
+       </section>
 
+       {/* Search Button */}
+       <Button className="mt-4 fw-md" type="primary" size="large" onClick={this.handleSearch}>Search!</Button>
 
-
-
+       {/* Results section */}
+       {searchResults.length > 0 ?
+          <>
+            <Divider />
+            <section className="col-12">
+              <div className="d-flex flex-column justify-content-center">
+                <h1 className="mb-4 fw-md">Ice-Creams!</h1>
+                <div className="d-flex flex-wrap">
+                  {searchResults.map((result, key) => (
+                    <PlaceCard info={result} key={key} />
+                  ))}
+                </div>
+              </div>
+            </section>
+          </>
+          : null}
+      </div>
+    )
+  }
 
 
 
 }
+
+
+export default MapContainer;
