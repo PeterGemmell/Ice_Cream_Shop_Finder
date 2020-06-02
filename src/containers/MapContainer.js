@@ -154,10 +154,59 @@ handleSearch = (() => {
  }));
 });
 
-render(){
-  
-}
+render() {
+   const { constraints, mapsLoaded, glasgowLatLng, markers, searchResults } = this.state;
+   const { autoCompleteService, geoCoderService } = this.state; // Google Maps Services
+   return (
+     <div className="w-100 d-flex py-4 flex-wrap justify-content-center">
+       <h1 className="w-100 fw-md">Glasgow Ice-Cream Finder!</h1>
+       {/* Constraints section */}
+       <section className="col-4">
+         {mapsLoaded ?
+           <div>
+             {constraints.map((constraint, key) => {
+               const { name, time } = constraint;
+               return (
+                 <div key={key} className="mb-4">
+                   <div className="d-flex mb-2">
+                     <Input className="col-4 mr-2" placeholder="Name" onChange={(event) => this.updateConstraintName(event, key)} />
+                     <MapAutoComplete
+                       autoCompleteService={autoCompleteService}
+                       geoCoderService={geoCoderService}
+                       glasgowLatLng={glasgowLatLng}
+                       markerName={name}
+                       addMarker={this.addMarker}
+                     />
+                   </div>
+                   <ConstraintSlider
+                     iconType="car"
+                     value={time}
+                     onChange={(value) => this.updateConstraintTime(key, value)}
+                     text="Minutes away by car"
+                   />
+                   <Divider />
+                 </div>
+               );
+             })}
+           </div>
+           : null
+         }
+       </section>
 
+       {/* Maps Section */}
+       <section className="col-8 h-lg">
+       <GoogleMapReact
+       bootstrapURLKeys={{
+         key: 'AIzaSyDMg4VyNgcmOUUktDRoIogoqR56usITneU',
+         libraries: ['places', 'directions']
+       }}
+       defaultZoom={11}
+       defaultCenter={{ lat: GLA_COOR.lat, lng: GLA_COOR.lng }}
+       yesIWantToUseGoogleMapApiInternals={true}
+       onGoogleApiLoaded={({map, maps}) => this.apiHasLoaded(map, maps)} // maps is refering to the maps api.
+       >
+       {/* Pin markers on the Map*/}
+       
 
 
 
