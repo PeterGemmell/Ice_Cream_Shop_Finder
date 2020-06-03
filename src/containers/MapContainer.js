@@ -127,7 +127,7 @@ handleSearch = (() => {
     // Second, For each iceCreamPlace, check if it is within acceptable travelling distance.
     const directionRequest = {
       origin: markerLatLng,
-      destination: '', // Address of the ice cream place. ??????????????????????????ERROR MAY BE HERE.
+      destination: 'address', // Address of the ice cream place. ??????????????????????????ERROR MAY BE HERE.
       travelMode: 'DRIVING',
     }
      directionService.route(directionRequest, ((result, status) => {
@@ -198,7 +198,7 @@ render() {
        <section className="col-8 h-lg">
        <GoogleMapReact
        bootstrapURLKeys={{
-         key: 'AIzaSyAdK4K3isrFoh2daMLWRp4vs-JBgmmiHEQ',
+         key: '',
          libraries: ['places', 'directions']
        }}
        defaultZoom={11}
