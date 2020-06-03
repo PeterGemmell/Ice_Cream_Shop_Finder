@@ -73,3 +73,14 @@
 .ant-slider-track {
   background-color: #282c34 !important;
 }
+
+.brand-red {
+  width: 45px;
+  height: 45px;
+  color: red;
+}
+
+/* .ice-cream-image {
+  width: 45px;
+  height: 45px;
+} */

@@ -1,8 +1,8 @@
 import React from 'react';
 // import { Icon, Slider } from 'antd';
 import Icon from '@ant-design/icons';
-// import Slider from "react-slick";
 import { Slider } from 'antd';
+// import { CarOutlined } from '@ant-design/icons';
 
 
 const ConstraintSlider = (({ iconType, value, onChange, text}) => {

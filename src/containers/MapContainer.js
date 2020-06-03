@@ -109,7 +109,7 @@ handleSearch = (() => {
   // First, search for ice cream shops.
   placesService.textSearch(placesRequest, ((response) => {
   // Only look at the nearest top 5.
-  const responseLimit = Math.min(5, response.length);
+   const responseLimit = Math.min(5, response.length);
   for(let i=0; i < responseLimit; i++){
     const iceCreamPlace = response[i];
     const { rating, name } = iceCreamPlace;
@@ -127,11 +127,10 @@ handleSearch = (() => {
     // Second, For each iceCreamPlace, check if it is within acceptable travelling distance.
     const directionRequest = {
       origin: markerLatLng,
-      destination: address, // Address of the ice cream place. ??????????????????????????ERROR MAY BE HERE.
+      destination: '', // Address of the ice cream place. ??????????????????????????ERROR MAY BE HERE.
       travelMode: 'DRIVING',
     }
-    directionService.route(directionRequest, ((result, status) => {
-      console.log(status)
+     directionService.route(directionRequest, ((result, status) => {
       if(status !== 'OK') { return }
       const travellingRoute = result.routes[0].legs[0]; // { duration: { text: 1mins, value: 600 } }
       const travellingTimeInMinutes = travellingRoute.duration.value / 60;
@@ -161,7 +160,7 @@ render() {
    const { autoCompleteService, geoCoderService } = this.state; // Google Maps Services
    return (
      <div className="w-100 d-flex py-4 flex-wrap justify-content-center">
-       <h1 className="w-100 fw-md">Ice-Cream Finder!</h1>
+       <h1 className="w-100 fw-md"><b>Ice-Cream Finder</b> 🍦</h1>
        {/* Constraints section */}
        <section className="col-4">
          {mapsLoaded ?
