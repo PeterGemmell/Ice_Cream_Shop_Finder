@@ -1,7 +1,8 @@
 import React from 'react';
 // import { Icon, Slider } from 'antd';
 import Icon from '@ant-design/icons';
-import Slider from "react-slick";
+// import Slider from "react-slick";
+import { Slider } from 'antd';
 
 
 const ConstraintSlider = (({ iconType, value, onChange, text}) => {
@@ -18,5 +19,4 @@ const ConstraintSlider = (({ iconType, value, onChange, text}) => {
 
 export default ConstraintSlider;
 
-// Here what is created is a car Icon and slider which can be moved in order
 // to select the distance in minutes the ice cream shop is away by car.

@@ -50,7 +50,7 @@ class MapContainer extends Component {
 // Adds a Marker to the GoogleMaps component.
 addMarker = ((lat, lng, name) => {
   const prevMarkers = this.state.markers;
-  const markers = Object.assign([], prevMarkers);
+  const markers = Object.assign([], prevMarkers);      // THIS WORKS A MARKER IS ADDED.
 
 // If name already exists in marker list just replace lat & lng.
 let newMarker = true;
@@ -59,14 +59,14 @@ for(let i=0; i <markers.length; i++){
     newMarker = false;
     markers[i].lat = lat;
     markers[i].lng = lng;
-    message.success(`Updated "${name}" Marker`);
+    message.success(`Updated "${name}" Marker`); // This works I think as we are getting or streets etc back.
     break;
   }
 }
 // Name does not exist in marker list. Create new marker.
 if(newMarker) {
   markers.push({lat, lng, name});
-  message.success(`Added new "${name}" Marker`);
+  message.success(`Added new "${name}" Marker`); // THIS WORKS.
 }
 
 this.setState({markers});
@@ -79,7 +79,7 @@ apiHasLoaded = ((map, mapsApi) => {
     mapsLoaded: true,
     map,
     mapsApi,
-    glasgowLatLng: new mapsApi.LatLng(GLA_COOR.lat, GLA_COOR.lng),
+    glasgowLatLng: new mapsApi.LatLng(GLA_COOR.lat ,GLA_COOR.lng), // can remove parseFloat. MAYBE????
     autoCompleteService: new mapsApi.places.AutocompleteService(),
     placesService: new mapsApi.places.PlacesService(map),
     geoCoderService: new mapsApi.Geocoder(),
@@ -97,7 +97,7 @@ handleSearch = (() => {
   const filteredResults = [];
   const marker = markers[0];
   const timeLimit = constraints[0].time;
-  const markerLatLng = new mapsApi.LatLng(marker.lat, marker.lng);
+  const markerLatLng = new mapsApi.LatLng(marker.lat, marker.lng); // MAYBE ????
 
   const placesRequest = {
     location: markerLatLng,
@@ -118,7 +118,7 @@ handleSearch = (() => {
     let photoUrl = '';
     let openNow = false;
     if(iceCreamPlace.opening_hours){
-      openNow = iceCreamPlace.opening_hours.open_now; // e.g true or false is it open.
+      openNow = iceCreamPlace.opening_hours.isOpen(); // e.g true or false is it open. // CHANGED FROM open_now.
     }
     if(iceCreamPlace.photos && iceCreamPlace.photos.length > 0){
       photoUrl = iceCreamPlace.photos[0].getUrl();
@@ -127,10 +127,11 @@ handleSearch = (() => {
     // Second, For each iceCreamPlace, check if it is within acceptable travelling distance.
     const directionRequest = {
       origin: markerLatLng,
-      destination: address, // Address of the ice cream place.
+      destination: address, // Address of the ice cream place. ??????????????????????????ERROR MAY BE HERE.
       travelMode: 'DRIVING',
     }
     directionService.route(directionRequest, ((result, status) => {
+      console.log(status)
       if(status !== 'OK') { return }
       const travellingRoute = result.routes[0].legs[0]; // { duration: { text: 1mins, value: 600 } }
       const travellingTimeInMinutes = travellingRoute.duration.value / 60;
@@ -160,7 +161,7 @@ render() {
    const { autoCompleteService, geoCoderService } = this.state; // Google Maps Services
    return (
      <div className="w-100 d-flex py-4 flex-wrap justify-content-center">
-       <h1 className="w-100 fw-md">Glasgow Ice-Cream Finder!</h1>
+       <h1 className="w-100 fw-md">Ice-Cream Finder!</h1>
        {/* Constraints section */}
        <section className="col-4">
          {mapsLoaded ?
@@ -174,7 +175,7 @@ render() {
                      <MapAutoComplete
                        autoCompleteService={autoCompleteService}
                        geoCoderService={geoCoderService}
-                       glasgowLatLng={glasgowLatLng}
+                       glasgowLatLng={glasgowLatLng} // THIS MAY NOT BE RIGHT EITHER??
                        markerName={name}
                        addMarker={this.addMarker}
                      />
@@ -198,7 +199,7 @@ render() {
        <section className="col-8 h-lg">
        <GoogleMapReact
        bootstrapURLKeys={{
-         key: '',
+         key: 'AIzaSyAdK4K3isrFoh2daMLWRp4vs-JBgmmiHEQ',
          libraries: ['places', 'directions']
        }}
        defaultZoom={11}
