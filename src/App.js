@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import './App.css';
 import MapContainer from './containers/MapContainer';
 import GoogleMapReact from 'google-map-react';
+import 'antd/dist/antd.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import Icon from '@ant-design/icons';
 // import 'bootstrap/dist/css/bootstrap.css';
-import 'antd/dist/antd.css';
+
 
 class App extends Component {
 

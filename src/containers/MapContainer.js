@@ -4,7 +4,8 @@ import MapAutoComplete from '../components/MapAutoComplete';
 import MapMarker from '../components/MapMarker';
 import PlaceCard from '../components/PlaceCard';
 import ConstraintSlider from '../components/ConstraintSlider';
-// import Icon from '@ant-design/icons';
+import Icon from '@ant-design/icons';
+import 'antd/dist/antd.css';
 
 import { Button, Input, Divider, message } from 'antd';
 
