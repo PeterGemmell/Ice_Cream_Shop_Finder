@@ -4,7 +4,7 @@ import MapAutoComplete from '../components/MapAutoComplete';
 import MapMarker from '../components/MapMarker';
 import PlaceCard from '../components/PlaceCard';
 import ConstraintSlider from '../components/ConstraintSlider';
-import Icon from '@ant-design/icons';
+// import Icon from '@ant-design/icons';
 
 import { Button, Input, Divider, message } from 'antd';
 
@@ -107,7 +107,7 @@ class MapsContainer extends Component {
     // First, search for ice cream shops.
     placesService.textSearch(placesRequest, ((response) => {
       // Only look at the nearest top 5. Could change to more if want.
-      const responseLimit = Math.min(5, response.length);
+      const responseLimit = Math.min(6, response.length);
       for (let i = 0; i < responseLimit; i++) {
         const iceCreamPlace = response[i];
         const { rating, name } = iceCreamPlace;

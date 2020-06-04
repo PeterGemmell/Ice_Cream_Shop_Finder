@@ -30,7 +30,7 @@ class MapAutoComplete extends Component {
     if (value.length > 0) {
       const searchQuery = {
         input: value,
-        location: glasgowLatLng, // Search in Singapore
+        location: glasgowLatLng, // Search in Glasgow
         radius: 30000, // With a 30km radius
       };
       autoCompleteService.getQueryPredictions(searchQuery, ((response) => {
