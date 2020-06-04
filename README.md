@@ -7,8 +7,6 @@ The app is built using:
 
 *JavaScript React
 
-*Java Spring and H2 data base (back-end)
-
 *Additional libraries used: Google Maps JavaScript API, Ant Design.
 
 *Additionally you will need a Google Maps API key in order to render the map.
