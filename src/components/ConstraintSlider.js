@@ -1,8 +1,7 @@
 import React from 'react';
-// import { Icon, Slider } from 'antd';
 import Icon from '@ant-design/icons';
 import { Slider } from 'antd';
-// import { CarOutlined } from '@ant-design/icons';
+
 
 
 const ConstraintSlider = (({ iconType, value, onChange, text}) => {
@@ -20,3 +19,4 @@ const ConstraintSlider = (({ iconType, value, onChange, text}) => {
 export default ConstraintSlider;
 
 // to select the distance in minutes the ice cream shop is away by car.
+// note.
