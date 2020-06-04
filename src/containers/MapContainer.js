@@ -8,7 +8,7 @@ import Icon from '@ant-design/icons';
 
 import { Button, Input, Divider, message } from 'antd';
 
-const SG_COOR = { lat: 55.8652, lng: -4.2576 };
+const GLA = { lat: 55.8652, lng: -4.2576 };
 
 class MapsContainer extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class MapsContainer extends Component {
       markers: [],
       map: {},
       mapsApi: {},
-      singaporeLatLng: {},
+      glasgowLatLng: {},
       autoCompleteService: {},
       placesService: {},
       geoCoderService: {},
@@ -50,7 +50,7 @@ class MapsContainer extends Component {
     const prevMarkers = this.state.markers;
     const markers = Object.assign([], prevMarkers);
 
-    // If name already exists in marker list just replace lat & lng.
+    // If name already exists in marker list just replace the lat and lng.
     let newMarker = true;
     for (let i = 0; i < markers.length; i++) {
       if (markers[i].name === name) {
@@ -61,7 +61,7 @@ class MapsContainer extends Component {
         break;
       }
     }
-    // Name does not exist in marker list. Create new marker
+    // If the Name does not exist in marker list. Create a new marker.
     if (newMarker) {
       markers.push({ lat, lng, name });
       message.success(`Added new "${name}" Marker`);
@@ -71,13 +71,13 @@ class MapsContainer extends Component {
   });
 
   // Runs once when the Google Maps library is ready
-  // Initializes all services that we need
+  // Initializes all services that we need.
   apiHasLoaded = ((map, mapsApi) => {
     this.setState({
       mapsLoaded: true,
       map,
       mapsApi,
-      singaporeLatLng: new mapsApi.LatLng(SG_COOR.lat, SG_COOR.lng),
+      glasgowLatLng: new mapsApi.LatLng(GLA.lat, GLA.lng),
       autoCompleteService: new mapsApi.places.AutocompleteService(),
       placesService: new mapsApi.places.PlacesService(map),
       geoCoderService: new mapsApi.Geocoder(),
@@ -85,7 +85,7 @@ class MapsContainer extends Component {
     });
   });
 
-  // With the constraints, find some places serving ice-cream
+  // With the constraints, find some places serving ice-cream.
   handleSearch = (() => {
     const { markers, constraints, placesService, directionService, mapsApi } = this.state;
     if (markers.length === 0) {
@@ -99,34 +99,33 @@ class MapsContainer extends Component {
 
     const placesRequest = {
       location: markerLatLng,
-      // radius: '30000', // Cannot be used with rankBy. Pick your poison!
       type: ['restaurant', 'cafe'], // List of types: https://developers.google.com/places/supported_types
       query: 'ice cream',
-      rankBy: mapsApi.places.RankBy.DISTANCE, // Cannot be used with radius.
+      rankBy: mapsApi.places.RankBy.DISTANCE,
     };
 
     // First, search for ice cream shops.
     placesService.textSearch(placesRequest, ((response) => {
-      // Only look at the nearest top 5.
+      // Only look at the nearest top 5. Could change to more if want.
       const responseLimit = Math.min(5, response.length);
       for (let i = 0; i < responseLimit; i++) {
         const iceCreamPlace = response[i];
         const { rating, name } = iceCreamPlace;
-        const address = iceCreamPlace.formatted_address; // e.g 80 mandai Lake Rd,
-        const priceLevel = iceCreamPlace.price_level; // 1, 2, 3...
+        const address = iceCreamPlace.formatted_address; // for example 100 Queen Street, Glasgow.
+        const priceLevel = iceCreamPlace.price_level; // 1, 2, 3
         let photoUrl = '';
         let openNow = false;
         if (iceCreamPlace.opening_hours) {
-          openNow = iceCreamPlace.opening_hours.open_now; // e.g true/false
+          openNow = iceCreamPlace.opening_hours.isOpen(); // e.g is the shop open, true or false.
         }
         if (iceCreamPlace.photos && iceCreamPlace.photos.length > 0) {
           photoUrl = iceCreamPlace.photos[0].getUrl();
         }
 
-        // Second, For each iceCreamPlace, check if it is within acceptable travelling distance
+        // Second, For each iceCreamPlace, check if it is within acceptable travelling distance.
         const directionRequest = {
           origin: markerLatLng,
-          destination: address, // Address of ice cream place
+          destination: address, // Address of ice cream place.
           travelMode: 'DRIVING',
         }
         directionService.route(directionRequest, ((result, status) => {
@@ -134,7 +133,7 @@ class MapsContainer extends Component {
           const travellingRoute = result.routes[0].legs[0]; // { duration: { text: 1mins, value: 600 } }
           const travellingTimeInMinutes = travellingRoute.duration.value / 60;
           if (travellingTimeInMinutes < timeLimit) {
-            const distanceText = travellingRoute.distance.text; // 6.4km
+            const distanceText = travellingRoute.distance.text; // 10km
             const timeText = travellingRoute.duration.text; // 11 mins
             filteredResults.push({
               name,
@@ -147,7 +146,7 @@ class MapsContainer extends Component {
               timeText,
             });
           }
-          // Finally, Add results to state
+          // Finally, Add results to state.
           this.setState({ searchResults: filteredResults });
         }));
       }
@@ -155,11 +154,11 @@ class MapsContainer extends Component {
   });
 
   render() {
-    const { constraints, mapsLoaded, singaporeLatLng, markers, searchResults } = this.state;
+    const { constraints, mapsLoaded, glasgowLatLng, markers, searchResults } = this.state;
     const { autoCompleteService, geoCoderService } = this.state; // Google Maps Services
     return (
       <div className="w-100 d-flex py-4 flex-wrap justify-content-center">
-        <h1 className="w-100 fw-md">Find Some Ice-Creams!</h1>
+        <h1 className="w-100 fw-md">Ice-Cream Finder! 🍦</h1>
         {/* Constraints section */}
         <section className="col-4">
           {mapsLoaded ?
@@ -173,7 +172,7 @@ class MapsContainer extends Component {
                       <MapAutoComplete
                         autoCompleteService={autoCompleteService}
                         geoCoderService={geoCoderService}
-                        singaporeLatLng={singaporeLatLng}
+                        glasgowLatLng={glasgowLatLng}
                         markerName={name}
                         addMarker={this.addMarker}
                       />
@@ -201,9 +200,9 @@ class MapsContainer extends Component {
               libraries: ['places', 'directions']
             }}
             defaultZoom={11}
-            defaultCenter={{ lat: SG_COOR.lat, lng: SG_COOR.lng }}
+            defaultCenter={{ lat: GLA.lat, lng: GLA.lng }}
             yesIWantToUseGoogleMapApiInternals={true}
-            onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)} // "maps" is the mapApi. Bad naming but that's their library.
+            onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)} // "maps" is the mapApi.
           >
             {/* Pin markers on the Map*/}
             {markers.map((marker, key) => {
@@ -224,7 +223,7 @@ class MapsContainer extends Component {
             <Divider />
             <section className="col-12">
               <div className="d-flex flex-column justify-content-center">
-                <h1 className="mb-4 fw-md">Tadah! Ice-Creams!</h1>
+                <h1 className="mb-4 fw-md">Glasgow Ice-Creams!</h1>
                 <div className="d-flex flex-wrap">
                   {searchResults.map((result, key) => (
                     <PlaceCard info={result} key={key} />
