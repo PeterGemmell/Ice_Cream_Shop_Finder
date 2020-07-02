@@ -20,5 +20,5 @@ The app is built using:
 * npm start
 * The application will run on http://localhost:3000/
 
-![Imgur](https://i.imgur.com/W4KrmA8.png)
+![Imgur](https://i.imgur.com/TCJitqk.png)
 ![Imgur](https://i.imgur.com/LB0knyR.png)
